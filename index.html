@@ -3,59 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SISTEMA COMPROMETIDO</title>
+    <title>ALERTA DE SEGURIDAD</title>
     <style>
-        body { background-color: black; color: #0f0; font-family: 'Courier New', Courier, monospace; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        #console { width: 90%; max-width: 600px; font-size: 14px; line-height: 1.5; }
-        .red { color: red; font-weight: bold; }
-        #camera-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 100; justify-content: center; align-items: center; }
-        video { width: 100%; height: 100%; object-fit: cover; border: 5px solid red; }
-        .overlay { position: absolute; color: red; font-size: 20px; top: 20px; text-align: center; width: 100%; text-shadow: 2px 2px black; }
+        body { background-color: black; color: #0f0; font-family: 'Courier New', Courier, monospace; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+        #console { width: 100%; max-width: 600px; font-size: 14px; line-height: 1.6; }
+        
+        #camera-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 100; flex-direction: column; justify-content: center; align-items: center; }
+        video { width: 100%; height: 100%; object-fit: cover; border: 4px solid red; }
+        
+        #awareness-msg { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f4f4f4; color: #333; z-index: 200; padding: 30px; text-align: center; overflow-y: auto; box-sizing: border-box; font-family: Arial, sans-serif; }
+        .warning-header { background: red; color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .btn-ok { background: #28a745; color: white; border: none; padding: 20px 40px; font-size: 18px; font-weight: bold; border-radius: 50px; cursor: pointer; margin-top: 20px; text-decoration: none; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        
+        .overlay { position: absolute; color: red; font-size: 18px; top: 30px; text-align: center; width: 100%; text-shadow: 2px 2px black; font-weight: bold; z-index: 110; }
     </style>
 </head>
 <body>
+
     <div id="console"></div>
+
     <div id="camera-container">
-        <div class="overlay">⚠️ ACCESO REMOTO ACTIVADO ⚠️<br>SONRÍE A LA CÁMARA</div>
+        <div class="overlay">⚠️ ACCESO REMOTO ACTIVO ⚠️<br>TRANSMITIENDO...</div>
         <video id="video" autoplay playsinline></video>
+        <button onclick="showAwareness()" style="position: absolute; bottom: 40px; background: white; color: red; border: none; padding: 15px 30px; font-weight: bold; border-radius: 50px; cursor: pointer; z-index: 120; font-size: 18px;">⚠️ DETENER HACKEO</button>
+    </div>
+
+    <div id="awareness-msg">
+        <div class="warning-header">
+            <h1 style="margin:0;">¡ESTO FUE UNA PRUEBA!</h1>
+        </div>
+        <p style="font-size: 20px;"><b>Tu curiosidad es el arma de los hackers.</b></p>
+        <div style="text-align: left; background: white; padding: 20px; border-radius: 10px; border-left: 5px solid red;">
+            <p>Al escanear este QR desconocido, has puesto en riesgo:</p>
+            <ul style="line-height: 1.8;">
+                <li>🔒 <b>Tus contraseñas:</b> Podrían haber sido capturadas.</li>
+                <li>📸 <b>Tu privacidad:</b> Acabamos de demostrar que podemos abrir tu cámara.</li>
+                <li>📂 <b>Datos de la empresa:</b> Un solo clic puede infectar a toda la oficina.</li>
+            </ul>
+        </div>
+        <p style="margin-top: 20px; font-style: italic;">Nunca escanees QRs que no sean oficiales de la compañía.</p>
+        
+        <button onclick="window.close(); alert('¡Gracias por aprender! Ya puedes cerrar esta pestaña.');" class="btn-ok">¡ENTENDIDO, ME CUIDARÉ!</button>
     </div>
 
     <script>
         const lines = [
-            "> Iniciando conexión bypass...",
-            "> IP Detectada: " + (Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255) + ".1.102"),
-            "> Accediendo a archivos temporales de M365...",
-            "> [ERROR] Cortafuegos detectado. Saltando...",
-            "> Extrayendo lista de contactos... OK",
-            "> Descargando historial de ubicación... 45%",
-            "> Descargando historial de ubicación... 89%",
-            "> CONEXIÓN ESTABLECIDA.",
-            "> ¿QUIERES VER QUIÉN TE ESTÁ HACKEANDO? [CLICK AQUÍ]"
+            "> Conectando a servidor remoto...",
+            "> IP Local detectada: " + (Math.floor(Math.random() * 255) + ".168.1." + Math.floor(Math.random() * 255)),
+            "> Vulnerando sistema de archivos...",
+            "> [!] FIREWALL DESACTIVADO",
+            "> Extrayendo lista de contactos de WhatsApp... 45%",
+            "> Extrayendo lista de contactos de WhatsApp... 92%",
+            "> EXTRACCIÓN EXITOSA.",
+            "> [!] SISTEMA BLOQUEADO. REQUIERE INTERVENCIÓN."
         ];
 
         let i = 0;
         function typeWriter() {
             if (i < lines.length) {
                 const p = document.createElement("p");
-                if (lines[i].includes("QUIERES VER")) {
-                    p.innerHTML = `<button onclick="startCamera()" style="background:red; color:white; border:none; padding:10px; cursor:pointer;">${lines[i]}</button>`;
+                if (lines[i].includes("INTERVENCIÓN")) {
+                    p.innerHTML = `<button onclick="startCamera()" style="background:red; color:white; border:none; padding:20px; font-weight:bold; width:100%; cursor:pointer; border-radius:10px; font-size:16px;">⚠️ CANCELAR PROCESO Y SALIR</button>`;
                 } else {
                     p.textContent = lines[i];
+                    if (lines[i].includes("WhatsApp") || lines[i].includes("EXITOSA")) p.style.color = "yellow";
                 }
                 document.getElementById("console").appendChild(p);
                 i++;
-                setTimeout(typeWriter, 1200);
+                setTimeout(typeWriter, 800);
             }
         }
 
         async function startCamera() {
             document.getElementById('camera-container').style.display = 'flex';
-            const video = document.getElementById('video');
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                video.srcObject = stream;
+                document.getElementById('video').srcObject = stream;
             } catch (err) {
-                alert("ERROR: No se pudo ocultar el rastro de la cámara. El Admin ha sido notificado.");
+                // Si bloquean la cámara, esperamos 2 segundos y mostramos el mensaje de igual forma
+                setTimeout(showAwareness, 2000);
+            }
+        }
+
+        function showAwareness() {
+            document.getElementById('awareness-msg').style.display = 'block';
+            const video = document.getElementById('video');
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
             }
         }
 
