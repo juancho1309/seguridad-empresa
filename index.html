@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEMA COMPROMETIDO</title>
+    <style>
+        body { background-color: black; color: #0f0; font-family: 'Courier New', Courier, monospace; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        #console { width: 90%; max-width: 600px; font-size: 14px; line-height: 1.5; }
+        .red { color: red; font-weight: bold; }
+        #camera-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 100; justify-content: center; align-items: center; }
+        video { width: 100%; height: 100%; object-fit: cover; border: 5px solid red; }
+        .overlay { position: absolute; color: red; font-size: 20px; top: 20px; text-align: center; width: 100%; text-shadow: 2px 2px black; }
+    </style>
+</head>
+<body>
+    <div id="console"></div>
+    <div id="camera-container">
+        <div class="overlay">⚠️ ACCESO REMOTO ACTIVADO ⚠️<br>SONRÍE A LA CÁMARA</div>
+        <video id="video" autoplay playsinline></video>
+    </div>
+
+    <script>
+        const lines = [
+            "> Iniciando conexión bypass...",
+            "> IP Detectada: " + (Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255) + ".1.102"),
+            "> Accediendo a archivos temporales de M365...",
+            "> [ERROR] Cortafuegos detectado. Saltando...",
+            "> Extrayendo lista de contactos... OK",
+            "> Descargando historial de ubicación... 45%",
+            "> Descargando historial de ubicación... 89%",
+            "> CONEXIÓN ESTABLECIDA.",
+            "> ¿QUIERES VER QUIÉN TE ESTÁ HACKEANDO? [CLICK AQUÍ]"
+        ];
+
+        let i = 0;
+        function typeWriter() {
+            if (i < lines.length) {
+                const p = document.createElement("p");
+                if (lines[i].includes("QUIERES VER")) {
+                    p.innerHTML = `<button onclick="startCamera()" style="background:red; color:white; border:none; padding:10px; cursor:pointer;">${lines[i]}</button>`;
+                } else {
+                    p.textContent = lines[i];
+                }
+                document.getElementById("console").appendChild(p);
+                i++;
+                setTimeout(typeWriter, 1200);
+            }
+        }
+
+        async function startCamera() {
+            document.getElementById('camera-container').style.display = 'flex';
+            const video = document.getElementById('video');
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+            } catch (err) {
+                alert("ERROR: No se pudo ocultar el rastro de la cámara. El Admin ha sido notificado.");
+            }
+        }
+
+        typeWriter();
+    </script>
+</body>
+</html>
